@@ -1,6 +1,6 @@
 import FilterTag from '../components/FilterTag'
 
-const FilterContainer = ({filterControls, allTags, serverRelated}) => { 
+const FilterContainer = ({filterControls, allTags, serverRelated}) => {
     return (
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end">
@@ -24,14 +24,17 @@ const FilterContainer = ({filterControls, allTags, serverRelated}) => {
                         </label> 
                         <label className="text-sm font-medium text-gray-700" htmlFor="compact">Compact view</label>
                     </div>
-                    <div className="text-sm text-gray-600 pt-2 border-t border-gray-200"></div>
                 </div>
-                <div className="space-y-3">
+                <div className="pt-2 space-y-3">
                     <label className="text-sm font-medium text-gray-700">Filter by tags:</label>
-                    <div className="flex flex-wrap gap-2"> 
-                        {allTags.map(tag => 
-                            <FilterTag key={tag.id} text={tag.id} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag.id)}></FilterTag>
-                        )}
+                    <div>
+                        <span className="mb-3 px-2.5 py-0.5 text-xs font-semibold rounded-full inline-block cursor-pointer hover:opacity-80
+                        bg-red-300 text-gray-600 border border-gray-300" onClick={filterControls.clearFilters}>Clear all</span>
+                        <div className="flex flex-wrap gap-2"> 
+                            {allTags.map(tag => 
+                                <FilterTag key={tag.id} text={tag.id} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag.id)}></FilterTag>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="text-sm text-gray-600 pt-2 border-t border-gray-200">

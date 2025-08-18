@@ -12,7 +12,6 @@ const useFilter = (initialFilters=[]) => {
 
     const clearFilters = () => {
         setFilters([])
-        setSliderScoreValue(0)
     }
 
     const handleTagClick = (tagId) => {
