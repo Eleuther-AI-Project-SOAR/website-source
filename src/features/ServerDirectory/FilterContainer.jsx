@@ -38,7 +38,7 @@ const FilterContainer = ({filterControls, allTags, serverRelated}) => {
                     </div>
                 </div>
                 <div className="text-sm text-gray-600 pt-2 border-t border-gray-200">
-                    Showing {serverRelated.serverResults.length} of {serverRelated.servers.length}
+                    Showing {serverRelated.filteredServers.length} of {serverRelated.servers.length}
                 </div>
             </div>
     )

@@ -6,7 +6,7 @@ const Card = ({serverData, children}) => {
                     <a className="text-blue-600 hover:text-blue-800 transition-colors" href={serverData.link} target="_blank" rel="noopener noreferrer">{serverData.name}</a>
                 </div>
                 <div className="text-sm text-gray-500">Score: {serverData.score} • Type: {serverData.type}</div>
-                <div className="text-sm text-gray-600 flex-1">{serverData.notes}</div>
+                <div className="text-sm text-gray-600">{serverData.notes}</div>
                 <div className="flex flex-wrap gap-1 pt-2">{children}</div>
             </div>
         </div>
