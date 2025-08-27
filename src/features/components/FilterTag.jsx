@@ -1,10 +1,10 @@
 const FilterTag = ({text, onClick, isSelected=false}) => {
-    const defaultStyle = "bg-white text-gray-600 border border-gray-300"
+    const unSelectStyle = "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+    const selectStyle = "bg-indigo-600 text-white border-indigo-600"
     return (
-        <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full inline-block cursor-pointer hover:opacity-80 transition-all  
-        ${ isSelected ? 'bg-blue-600 text-white border-blue-500': defaultStyle}`}
-        style={{userSelect: 'none'}}
-        onClick={() => onClick(text) }>{text}</span>
+        <button className={`px-2.5 py-1 border rounded-full text-xs transition-colors cursor-pointer duration-200
+            ${isSelected ? selectStyle : unSelectStyle}`} 
+            style={{userSelect: 'none'}} onClick={() => onClick(text.toLowerCase())}>{text}</button>
     )
 }
 

@@ -1,5 +1,8 @@
 import './App.css'
+import Navbar from './features/components/Navbar'
 import ServerDirectory from './features/ServerDirectory/ServerDirectory'
+
+import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom'
 
 const dummyTags = ["open source", "startup", "transformers", "safety", "tooling", "bio", "chatbots", "vision", "robotics", "philosophy"];
   const generateServers = () => {
@@ -15,18 +18,28 @@ const dummyTags = ["open source", "startup", "transformers", "safety", "tooling"
   };
   const servers = generateServers();
   // HAVE TO FIX THIS
-  const allTags = Array.from(new Set(servers.flatMap((s) => s.tags))).sort().map(tag => {
+  /*const allTags = Array.from(new Set(servers.flatMap((s) => s.tags))).sort().map(tag => {
     return {id: tag}
-  });
+  });*/
+  const allTags = {
+    'Server Type': ["Research", "Hackathons", "Alignment", "GPU", "General", "Education", "Tool", "Casual", "LLM", "Prompting", "Bug Bounties", "Conference", "Crypto", "Entrepreneurship", "Company", "Robotics", "Puzzle", "Generation"],
+    'Activity Level': ["Very Active", "Active", "Semi-active", "Mostly Inactive", "Inactive"],
+    'Language': ["English", "Korean"],
+    'Location': ["Discord", "Slack", "Irl"],
+    'Others': ["Reading Group", "Paper Channel", "VC events/Office Hours", "Jobs Board"]
+  }
 
 function App() {
 
   return (
-    <>
-      <div className="p-4 sm:p-6 space-y-8 max-w-screen-2xl mx-auto font-sans bg-gray-50 min-h-screen text-gray-900">
-        <ServerDirectory servers={servers} allTags={allTags}></ServerDirectory>
+    <Router>
+      <div className="h-screen bg-gray-100 font-sans flex flex-col">
+        <Navbar></Navbar>
+        <main className="flex-1 flex flex-col">        
+          <ServerDirectory servers={servers} allTags={allTags}></ServerDirectory>
+        </main>
       </div>
-    </>
+    </Router>
   )
 }
 

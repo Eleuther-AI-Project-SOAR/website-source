@@ -1,7 +1,7 @@
 import DisplayTag from '../components/DisplayTag'
 import Card from '../ServerDirectory/Card'
 import Results from '../ServerDirectory/Results'
-import FilterContainer from '../ServerDirectory/FilterContainer'
+import FilterContainerNew from './FilterContainer'
 
 import useFilter from '../hooks/FilterHook'
 
@@ -62,25 +62,29 @@ const ServerDirectory = ({servers, allTags}) => {
     }
 
     return (
-        <>
-            <FilterContainer filterControls={filterControls} allTags={allTags} serverRelated={serverRelated}></FilterContainer>
-            <Results>
-                {filteredServers.map(server => {
-                    const serverData = {
-                        id: server.id,
-                        name: server.name,
-                        score: server.score,
-                        type: server.type,
-                        link: server.link,
-                        notes: server.notes
-                    }
+            <div className="mt-4 bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg shadow-inner flex-1">
+                <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
+                        <FilterContainerNew filterControls={filterControls} allTags={allTags} serverRelated={serverRelated}></FilterContainerNew>
+                        <Results>
+                            {filteredServers.map(server => {
+                                const serverData = {
+                                    id: server.id,
+                                    name: server.name,
+                                    score: server.score,
+                                    type: server.type,
+                                    link: server.link,
+                                    notes: server.notes
+                                }
 
-                    return <Card key={server.id} serverData={serverData}>
-                        {server.tags.map(tag => <DisplayTag key={tag} text={tag}></DisplayTag>)}
-                    </Card>
-                })}
-            </Results>
-        </>
+                                return <Card key={server.id} serverData={serverData}>
+                                    {server.tags.map(tag => <DisplayTag key={tag} text={tag}></DisplayTag>)}
+                                </Card>
+                            })}
+                        </Results>
+                    </div>
+                </div>
+            </div>
     )
 }
 
