@@ -1,5 +1,5 @@
-import FilterTag from '../components/FilterTag'
-import { MinusCollapseIcon } from '../icons/SymbolIcons'
+import FilterTag from '../../components/FilterTag'
+import { MinusCollapseIcon } from '../../icons/SymbolIcons'
 
 const FilterContainer = ({filterControls, allTags, serverRelated}) => {
     return (
@@ -16,7 +16,7 @@ const FilterContainer = ({filterControls, allTags, serverRelated}) => {
                             type="text" onInput={e => filterControls.setSearchQuery(e.target.value)} />
                     </div>
                     <div>
-                        <label for="min-score" className="block text-sm font-medium text-gray-700 mb-1">Min Score: 0.0</label>
+                        <label for="min-score" className="block text-sm font-medium text-gray-700 mb-1">Min Score: {filterControls.sliderScoreValue}</label>
                         <input id="min-score" min="0" max="10" step="0.1" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" type="range" 
                             defaultValue={0} onChange={(e) => filterControls.setSliderScoreValue(e.target.value)} />
                     </div>
@@ -32,7 +32,7 @@ const FilterContainer = ({filterControls, allTags, serverRelated}) => {
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     {allTags[tagType].map(tag =>
-                                        <FilterTag key={tag} text={tag} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag.toLowerCase())}></FilterTag> 
+                                        <FilterTag key={tag} text={tag} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag)}></FilterTag> 
                                     )}
                                 </div>
                             </div>

@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-    const navItems = [
-        { name: 'Home', path: '/' },
-        { name: 'About', path: '/about' },
-        { name: 'Submit Server', path: '/submit' }
-    ];
-
+const Navbar = ({navItems}) => {
     return (
         <header className="bg-gray-100 text-gray-800 shadow-md">
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
-                        <h1 className="text-2xl font-bold">AI Discord Directory</h1>
+                        <Link to={navItems[0].path}><h1 className="text-2xl font-bold">AI Discord Directory</h1></Link>
                     </div>
                     <nav className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
