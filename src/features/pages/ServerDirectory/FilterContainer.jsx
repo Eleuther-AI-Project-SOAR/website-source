@@ -1,7 +1,24 @@
 import FilterTag from '../../components/FilterTag'
-import { MinusCollapseIcon } from '../../icons/SymbolIcons'
+import { MinusCollapseIcon, PlusExpandIcon } from '../../icons/SymbolIcons'
+import {useState} from 'react'
 
 const FilterContainer = ({filterControls, allTags, serverRelated}) => {
+
+    const [isFilterCategoryCollapsed, setFilterCatgoryCollapse] = useState({
+        'Server Type': false,
+        'Activity Level': false,
+        'Language': false,
+        'Location': false,
+        'Others': false
+    })
+
+    const handleCollapseOnClick = (id) => {
+        setFilterCatgoryCollapse(prevState => ({
+            ...prevState,
+            [id]: !prevState[id]
+        }))
+    }
+
     return (
         <div className="w-full lg:w-80 xl:w-96 lg:flex-shrink-0 lg:sticky lg:top-6">
             <div className="p-4 bg-white rounded-lg shadow-md lg:max-h-[calc(100vh-3rem)] overflow-y-auto">
@@ -26,15 +43,20 @@ const FilterContainer = ({filterControls, allTags, serverRelated}) => {
                             <div>
                                 <div className="flex justify-between items-center border-b pb-2 mb-3">
                                     <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">{tagType}</h3>
-                                    <button className="text-gray-500 hover:text-gray-800">
-                                        <MinusCollapseIcon></MinusCollapseIcon>
+                                    <button className="text-gray-500 hover:text-gray-800 cursor-pointer" onClick={() => handleCollapseOnClick(tagType)}>
+                                        {!isFilterCategoryCollapsed[tagType] ? <MinusCollapseIcon></MinusCollapseIcon> : <PlusExpandIcon></PlusExpandIcon>}
                                     </button>
                                 </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {allTags[tagType].map(tag =>
-                                        <FilterTag key={tag} text={tag} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag)}></FilterTag> 
-                                    )}
-                                </div>
+                                {
+                                    !isFilterCategoryCollapsed[tagType] ? 
+                                    <div className="flex flex-wrap gap-2">
+                                        {allTags[tagType].map(tag =>
+                                            <FilterTag key={tag} text={tag} onClick={filterControls.handleTagClick} isSelected={filterControls.filters.includes(tag)}></FilterTag> 
+                                        )}
+                                    </div>
+                                    :
+                                    '' 
+                                }
                             </div>
                         )}
                     </div>

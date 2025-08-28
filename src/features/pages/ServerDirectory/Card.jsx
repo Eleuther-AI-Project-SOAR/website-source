@@ -2,7 +2,7 @@ import { LanguageIcon } from "../../icons/LanguageIcons"
 import { ExternalLinkIcon, StarIcon } from "../../icons/SymbolIcons"
 import DisplayTag from '../../components/DisplayTag'
 
-const Card = ({serverData, ratingThreshold, activityLevelStyles, locationStyles, openModalOnClick}) => {
+const Card = ({serverData, ratingThreshold, activityLevelStyles, locationStyles, featureTagStyles, openModalOnClick}) => {
     return (
         <div className="bg-white rounded-lg shadow-md p-8 flex flex-col hover:shadow-lg transition-shadow duration-200 cursor-pointer border border-gray-200 overflow-hidden" onClick={() => openModalOnClick(serverData)}>
             <div className="flex flex-col">
@@ -31,7 +31,7 @@ const Card = ({serverData, ratingThreshold, activityLevelStyles, locationStyles,
                 </div>
                 <div className="mt-5">
                     <div className="flex flex-wrap gap-2">
-                        {serverData.features.map(feature => <DisplayTag key={feature} feature={feature}></DisplayTag>)}
+                        {serverData.features.map(feature => <DisplayTag key={feature} feature={feature} featureTagStyles={featureTagStyles}></DisplayTag>)}
                     </div>
                 </div>
             </div>

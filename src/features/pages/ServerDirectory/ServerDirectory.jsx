@@ -3,10 +3,13 @@ import Results from './Results'
 import Card from './Card'
 import CardModal from '../../components/CardModal'
 import { DiscordIcon, PersonIcon, SlackIcon } from "../../icons/LocationIcons"
+import { PaperChannelIcon, ReadingGroupIcon, VCEventsIcon, JobsBoardIcon } from "../../icons/TagIcons"
 
 import useFilter from '../../hooks/FilterHook'
 
 import {useState, useEffect} from 'react'
+import TableListEntries from '../../components/TableListEntries'
+import TableList from './TableList'
 
 const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     //const [loading, setLoading] = useState(true)
@@ -16,6 +19,7 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     
     const [filteredServers, setFilteredServers] = useState([])
     const [selectedModal, setModal] = useState(null)
+    const [isTableViewOn, setTableViewToggle] = useState(false)
     
     /* Uncomment when we have the actual data or endpoint to fetch data
     useEffect(() => {
@@ -66,11 +70,30 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     const handleModalOnClose = () => {
         setModal(null)
     }
-    
+   
+    const handleTableListViewOnClick = (id) => {
+        id = id.toLowerCase()
+        if (id == 'grid' && isTableViewOn) setTableViewToggle(!isTableViewOn)
+        else if (id == 'table' && !isTableViewOn) setTableViewToggle(!isTableViewOn)
+    }
+
     const serverRelated = {
         servers,
         filteredServers
     }
+
+    const serverFormattedData = filteredServers.map(server => {
+        return {
+            name: server.name,
+            rating: server.rating,
+            tag: server.tag,
+            activityLevel: server.activityLevel,
+            language: server.language,
+            location: server.location,
+            description: server.description,
+            features: server.features
+        }
+    }) 
 
     const activityLevelStyles = {
         'Very Active': 'bg-green-500 text-white',
@@ -86,30 +109,40 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
         'IRL': <PersonIcon />
     }
 
+    const featureTagStyles = {
+        'Reading Group': { icon: <ReadingGroupIcon />, color: 'bg-purple-100 text-purple-800' },
+        'Paper Channel': { icon: <PaperChannelIcon />, color: 'bg-blue-100 text-blue-800' },
+        'VC events/Office Hours': { icon: <VCEventsIcon />, color: 'bg-green-100 text-green-800' },
+        'Jobs Board': { icon: <JobsBoardIcon />, color: 'bg-orange-100 text-orange-800' },
+    }
+
     return (
             <div className="mt-4 bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg shadow-inner flex-1">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
                         <FilterContainer filterControls={filterControls} allTags={allTags} serverRelated={serverRelated}></FilterContainer>
-                        <Results>
-                            {filteredServers.map(server => {
-                                const serverData = {
-                                    name: server.name,
-                                    rating: server.rating,
-                                    tag: server.tag,
-                                    activityLevel: server.activityLevel,
-                                    language: server.language,
-                                    location: server.location,
-                                    description: server.description,
-                                    features: server.features
-                                }
-
-                                return <Card key={server.name} serverData={serverData} ratingThreshold={ratingThreshold} activityLevelStyles={activityLevelStyles} locationStyles={locationStyles} openModalOnClick={handleCardOnClick}></Card>
-                            })}
+                        <Results handleTableListViewOnClick={handleTableListViewOnClick} isTableViewOn={isTableViewOn}>
+                            {!isTableViewOn ?
+                                <div className="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-6 items-stretch">
+                                    {serverFormattedData.map(server => {
+                                        return <Card key={server.name} serverData={server} ratingThreshold={ratingThreshold} activityLevelStyles={activityLevelStyles} locationStyles={locationStyles} 
+                                            featureTagStyles={featureTagStyles} openModalOnClick={handleCardOnClick}></Card>
+                                    })}
+                                </div>
+                                : 
+                                <div>
+                                    <TableList>
+                                        {serverFormattedData.map(server => {
+                                            return <TableListEntries key={server.name} serverData={server} activityLevelStyles={activityLevelStyles} featureTagStyles={featureTagStyles}></TableListEntries>
+                                        })}
+                                    </TableList>
+                                </div>
+                            }
                         </Results>
                     </div>
                 </div>
-                {selectedModal ? <CardModal serverData={selectedModal} ratingThreshold={ratingThreshold} activityLevelStyles={activityLevelStyles} locationStyles={locationStyles} onClick={handleModalOnClose}></CardModal> : ''}
+                {selectedModal ? <CardModal serverData={selectedModal} ratingThreshold={ratingThreshold} activityLevelStyles={activityLevelStyles} locationStyles={locationStyles} 
+                    featureTagStyles={featureTagStyles} onClick={handleModalOnClose}></CardModal> : ''}
             </div>
     )
 }
