@@ -27,7 +27,7 @@ const Card = ({serverData, ratingThreshold, activityLevelStyles, locationStyles,
                         <LanguageIcon></LanguageIcon>
                         <span>{serverData.language}</span>
                     </div>
-                    <p className="text-gray-600 mt-4 text-sm">Dedicated to solving the AI alignment problem.</p>
+                    <p className="text-gray-600 mt-4 text-sm line-clamp-4">{serverData.description}</p>
                 </div>
                 <div className="mt-5">
                     <div className="flex flex-wrap gap-2">
