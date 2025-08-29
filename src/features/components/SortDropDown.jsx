@@ -92,7 +92,7 @@ const SortDropDown = ({
                                 onClick={() => handlePrimaryChange(option)}
                                 className={`text-xs px-2 py-1 rounded text-left ${
                                     primarySortOption === option
-                                        ? 'bg-blue-500 text-white'
+                                        ? 'bg-indigo-600 text-white'
                                         : 'hover:bg-gray-100'
                                 }`}
                             >
@@ -117,7 +117,7 @@ const SortDropDown = ({
                                 onClick={() => handleSecondaryChange(option)}
                                 className={`text-xs px-2 py-1 rounded text-left ${
                                     secondarySortOption === option
-                                        ? 'bg-blue-500 text-white'
+                                        ? 'bg-indigo-600 text-white'
                                         : 'hover:bg-gray-100'
                                 }`}
                             >
