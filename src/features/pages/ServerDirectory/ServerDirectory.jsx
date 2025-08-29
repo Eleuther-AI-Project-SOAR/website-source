@@ -12,33 +12,11 @@ import TableListEntries from '../../components/TableListEntries'
 import TableList from './TableList'
 
 const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
-    //const [loading, setLoading] = useState(true)
-    //const [error, setError] = useState(null)
-    
     const filterControls = useFilter()
     
     const [filteredServers, setFilteredServers] = useState([])
     const [selectedModal, setModal] = useState(null)
     const [isTableViewOn, setTableViewToggle] = useState(false)
-    
-    /* Uncomment when we have the actual data or endpoint to fetch data
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                // const response = await fetch('/api/servers')
-                // const data = await response.json()
-                // setServers(data)
-                setServers(generateServers())
-            } catch (err) {
-                setError(err.message)
-            } finally {
-                setLoading(false)
-            }
-        }
-        
-        fetchData()
-    }, [])*/
     
     // Helper function to categorize filters
     const categorizeFilters = (filters, allTags) => {

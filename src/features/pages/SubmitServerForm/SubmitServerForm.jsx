@@ -5,6 +5,7 @@ const SubmitServerForm = ({allTags}) => {
     const [selectedServerType, setSelectedServerType] = useState(null);
     const [selectedOthers, setSelectedOthers] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [serverTypeError, setServerTypeError] = useState(false);
     // Refs for form elements to enable focusing
     const formRefs = {
         serverName: useRef(null),
@@ -34,6 +35,9 @@ const SubmitServerForm = ({allTags}) => {
     };
 
     const validateForm = () => {
+        // Reset error states
+        setServerTypeError(false);
+        
         // Define the order of validation
         const validationOrder = [
             { id: 'server-name', name: 'serverName', ref: 'serverName' },
@@ -44,7 +48,7 @@ const SubmitServerForm = ({allTags}) => {
             { id: 'language', name: 'language', ref: 'language' },
             { id: 'activity-level', name: 'activityLevel', ref: 'activityLevel' },
             { id: 'difficulty-level', name: 'difficultyLevel', ref: 'difficultyLevel' },
-            { id: 'server-type', name: 'serverType', ref: null },
+            { id: 'server-type', name: 'serverType', ref: 'serverType' },
             { id: 'others', name: 'others', ref: null }
         ];
 
@@ -53,12 +57,11 @@ const SubmitServerForm = ({allTags}) => {
             // Special handling for tag selections
             if (field.name === 'serverType') {
                 if (!selectedServerType) {
+                    setServerTypeError(true);
                     return field.ref; // Return ref name for focusing
                 }
             } else if (field.name === 'others') {
-                if (selectedOthers.length === 0) {
-                    return field.ref; // Return ref name for focusing (null in this case)
-                }
+                // Others is optional, so no validation needed
             } else {
                 // Regular input fields
                 const element = document.getElementById(field.id);
@@ -184,7 +187,7 @@ const SubmitServerForm = ({allTags}) => {
                                         <input 
                                             id="invite-link" 
                                             ref={formRefs.inviteLink}
-                                            placeholder="https://discord.gg/your-server" 
+                                            placeholder="e.g., https://discord.gg/your-server" 
                                             required 
                                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                                             type="url" 
@@ -246,8 +249,9 @@ const SubmitServerForm = ({allTags}) => {
                                 
                                 <div className="space-y-4">
                                     <div>
-                                        <h3 className="text-sm font-medium text-gray-800 mb-2">
-                                            Server Type* (Select one)
+                                        <h3 className={`text-sm font-medium mb-2 ${serverTypeError ? 'text-red-600' : 'text-gray-800'}`}>
+                                            Server Type* (Select One)
+                                            {serverTypeError && <span className="text-red-600"> - This field is required</span>}
                                         </h3>
                                         <div className="flex flex-wrap gap-2">
                                             {serverTypeTags.map(tag => (
@@ -258,7 +262,9 @@ const SubmitServerForm = ({allTags}) => {
                                                     className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                                                         selectedServerType === tag
                                                             ? 'bg-indigo-600 text-white'
-                                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                                            : serverTypeError 
+                                                                ? 'bg-red-100 text-red-700 border border-red-300' 
+                                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                                     }`}
                                                 >
                                                     {tag}
@@ -269,7 +275,7 @@ const SubmitServerForm = ({allTags}) => {
 
                                     <div>
                                         <h3 className="text-sm font-medium text-gray-800 mb-2">
-                                            Others* (Select all that applies)
+                                            Others (Optional Select All That Applies)
                                         </h3>
                                         <div className="flex flex-wrap gap-2">
                                             {otherTags.map(tag => (
