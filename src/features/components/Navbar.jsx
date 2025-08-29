@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({navItems}) => {
     return (
-        <header className="bg-gray-100 text-gray-800 shadow-md">
+        <header className="bg-gray-100 text-gray-800">
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">

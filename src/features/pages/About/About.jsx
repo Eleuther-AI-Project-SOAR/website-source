@@ -1,6 +1,6 @@
 const About = () => {
     return (
-        <div class="mt-4 bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg shadow-inner flex-1">
+        <div class="bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg flex-1">
             <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">About the AI Discord Directory</h2>
                 <div class="space-y-4 text-gray-600">

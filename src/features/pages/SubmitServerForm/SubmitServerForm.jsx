@@ -5,8 +5,6 @@ const SubmitServerForm = ({allTags}) => {
     const [selectedServerType, setSelectedServerType] = useState(null);
     const [selectedOthers, setSelectedOthers] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errors, setErrors] = useState({});
-
     // Refs for form elements to enable focusing
     const formRefs = {
         serverName: useRef(null),
@@ -55,29 +53,37 @@ const SubmitServerForm = ({allTags}) => {
             // Special handling for tag selections
             if (field.name === 'serverType') {
                 if (!selectedServerType) {
-                    setErrors({ [field.name]: 'Please fill out this field' });
                     return field.ref; // Return ref name for focusing
                 }
             } else if (field.name === 'others') {
                 if (selectedOthers.length === 0) {
-                    setErrors({ [field.name]: 'Please fill out this field' });
                     return field.ref; // Return ref name for focusing (null in this case)
                 }
             } else {
                 // Regular input fields
                 const element = document.getElementById(field.id);
                 if (element && !element.value.trim()) {
-                    setErrors({ [field.name]: 'Please fill out this field' });
                     return field.ref; // Return ref name for focusing
+                }
+                
+                // Special validation for description (minimum 10 characters)
+                if (field.name === 'description' && element.value.trim().length < 10) {
+                    return field.ref; // Return ref name for focusing
+                }
+                
+                // Special validation for email (valid email format)
+                if (field.name === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(element.value.trim())) {
+                        return field.ref; // Return ref name for focusing
+                    }
                 }
             }
         }
         
         // If we get here, all fields are valid
-        setErrors({});
         return null; // No focus needed
     };
-
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         const focusRef = validateForm();
@@ -105,7 +111,7 @@ const SubmitServerForm = ({allTags}) => {
             <div className="bg-gray-50 py-12">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-extrabold text-gray-900">List Your AI Discord Server</h2>
+                        <h2 className="text-4xl font-extrabold text-gray-900">List Your AI Server</h2>
                         <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Join our directory and connect your AI research community with researchers worldwide. Get your server discovered by the right audience.</p>
                     </div>
                     <div className="space-y-8">
@@ -116,10 +122,10 @@ const SubmitServerForm = ({allTags}) => {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-800">Server Application</h3>
-                                    <p className="text-sm text-gray-500">Fill out this form to get your Discord server listed in our directory. All submissions are manually reviewed to ensure quality.</p>
+                                    <p className="text-sm text-gray-500">Fill out this form to get your server listed in our directory. All submissions are manually reviewed to ensure quality.</p>
                                 </div>
                             </div>
-                            <form className="space-y-6">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="org-name" className="block text-sm font-medium text-gray-700 mb-1">Organization Name (Optional)</label>
@@ -129,22 +135,17 @@ const SubmitServerForm = ({allTags}) => {
                                         <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">Website (Optional)</label>
                                         <input id="website" placeholder="https://your-organization.com" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" type="url" />
                                     </div>
-                                    <div>
-                                        <label htmlFor="server-name" className="block text-sm font-medium text-gray-700 mb-1">Discord Server Name *</label>
+                                <div>
+                                    <label htmlFor="server-name" className="block text-sm font-medium text-gray-700 mb-1"> Server Name *</label>
                                         <input 
                                             id="server-name" 
                                             ref={formRefs.serverName}
                                             placeholder="e.g., AI Research Hub" 
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.serverName ? 'border-red-500' : 'border-gray-300'
-                                            }`} 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                                             type="text" 
                                         />
-                                        {errors.serverName && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.serverName}</p>
-                                        )}
-                                    </div>
+                                </div>
                                     <div>
                                         <label htmlFor="member-count" className="block text-sm font-medium text-gray-700 mb-1">Current Member Count *</label>
                                         <input 
@@ -153,56 +154,41 @@ const SubmitServerForm = ({allTags}) => {
                                             placeholder="e.g., 1500" 
                                             min={0} 
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.memberCount ? 'border-red-500' : 'border-gray-300'
-                                            }`} 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                                             type="number" 
                                             onInput={(e) => {
                                                 // Ensure only valid numbers are entered
                                                 if (e.target.value < 0) e.target.value = '';
                                             }}
                                         />
-                                        {errors.memberCount && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.memberCount}</p>
-                                        )}
                                     </div>
                                 </div>
                                 <div>
                                     <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Server Description *</label>
-                                    <textarea 
-                                        id="description" 
-                                        ref={formRefs.description}
-                                        rows="4" 
-                                        placeholder="Describe your server's purpose, main topics, and what makes it unique... (minimum 10 characters)" 
-                                        required 
-                                        minLength="10" 
-                                        maxLength="500" 
-                                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                            errors.description ? 'border-red-500' : 'border-gray-300'
-                                        }`}
-                                    ></textarea>
-                                    {errors.description && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.description}</p>
-                                    )}
-                                    <p className="text-right text-xs text-gray-500 mt-1">0/500 characters</p>
+                                        <textarea 
+                                            id="description" 
+                                            ref={formRefs.description}
+                                            rows="4" 
+                                            placeholder="Describe your server's purpose, main topics, and what makes it unique... (minimum 10 characters)" 
+                                            required 
+                                            minLength="10" 
+                                            maxLength="500" 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        ></textarea>
+                                    <p className="text-right text-xs text-gray-500 mt-1">
+                                        0/500 characters
+                                    </p>
                                 </div>
                                 <div>
-                                    <label htmlFor="invite-link" className="block text-sm font-medium text-gray-700 mb-1">Discord Invite Link *</label>
-                                    <input 
-                                        id="invite-link" 
-                                        ref={formRefs.inviteLink}
-                                        placeholder="https://discord.gg/your-server" 
-                                        required 
-                                        pattern="https?://discord\.gg/.*" 
-                                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                            errors.inviteLink ? 'border-red-500' : 'border-gray-300'
-                                        }`} 
-                                        type="url" 
-                                    />
-                                    {errors.inviteLink && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.inviteLink}</p>
-                                    )}
-                                    <p className="text-xs text-gray-500 mt-1">Must be a valid Discord invite link (https://discord.gg/...)</p>
+                                    <label htmlFor="invite-link" className="block text-sm font-medium text-gray-700 mb-1"> Invite Link *</label>
+                                        <input 
+                                            id="invite-link" 
+                                            ref={formRefs.inviteLink}
+                                            placeholder="https://discord.gg/your-server" 
+                                            required 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                                            type="url" 
+                                        />
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
@@ -212,14 +198,9 @@ const SubmitServerForm = ({allTags}) => {
                                             ref={formRefs.email}
                                             placeholder="your.email@example.com" 
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.email ? 'border-red-500' : 'border-gray-300'
-                                            }`} 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                                             type="email" 
                                         />
-                                        {errors.email && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                                        )}
                                     </div>
                                     <div>
                                         <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">Language *</label>
@@ -228,14 +209,9 @@ const SubmitServerForm = ({allTags}) => {
                                             ref={formRefs.language}
                                             placeholder="e.g., English" 
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.language ? 'border-red-500' : 'border-gray-300'
-                                            }`} 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" 
                                             type="text" 
                                         />
-                                        {errors.language && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.language}</p>
-                                        )}
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -245,16 +221,11 @@ const SubmitServerForm = ({allTags}) => {
                                             id="activity-level" 
                                             ref={formRefs.activityLevel}
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.activityLevel ? 'border-red-500' : 'border-gray-300'
-                                            }`}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                         >
                                             <option value="">Select activity level</option>
                                             {activityTags.map(activity => <option key={activity}>{activity}</option>)}
                                         </select>
-                                        {errors.activityLevel && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.activityLevel}</p>
-                                        )}
                                     </div>
                                     <div>
                                         <label htmlFor="difficulty-level" className="block text-sm font-medium text-gray-700 mb-1">Target Difficulty Level *</label>
@@ -262,9 +233,7 @@ const SubmitServerForm = ({allTags}) => {
                                             id="difficulty-level" 
                                             ref={formRefs.difficultyLevel}
                                             required 
-                                            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                                                errors.difficultyLevel ? 'border-red-500' : 'border-gray-300'
-                                            }`}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                         >
                                             <option value="">Select difficulty level</option>
                                             <option>Beginner</option>
@@ -272,15 +241,12 @@ const SubmitServerForm = ({allTags}) => {
                                             <option>Advanced</option>
                                             <option>All levels</option>
                                         </select>
-                                        {errors.difficultyLevel && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.difficultyLevel}</p>
-                                        )}
                                     </div>
                                 </div>
                                 
                                 <div className="space-y-4">
                                     <div>
-                                        <h3 className={`text-sm font-medium mb-2 ${errors.serverType ? 'text-red-600' : 'text-gray-800'}`}>
+                                        <h3 className="text-sm font-medium text-gray-800 mb-2">
                                             Server Type* (Select one)
                                         </h3>
                                         <div className="flex flex-wrap gap-2">
@@ -299,13 +265,10 @@ const SubmitServerForm = ({allTags}) => {
                                                 </button>
                                             ))}
                                         </div>
-                                        {errors.serverType && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.serverType}</p>
-                                        )}
                                     </div>
 
                                     <div>
-                                        <h3 className={`text-sm font-medium mb-2 ${errors.others ? 'text-red-600' : 'text-gray-800'}`}>
+                                        <h3 className="text-sm font-medium text-gray-800 mb-2">
                                             Others* (Select all that applies)
                                         </h3>
                                         <div className="flex flex-wrap gap-2">
@@ -324,16 +287,13 @@ const SubmitServerForm = ({allTags}) => {
                                                 </button>
                                             ))}
                                         </div>
-                                        {errors.others && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.others}</p>
-                                        )}
                                     </div>
                                 </div>
 
                                 <div className="pt-4 flex justify-end">
                                     <button type="submit" className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-white rounded-lg text-base font-semibold transition-colors shadow-md 
                                     ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
-                                      onClick={handleSubmit} disabled={isSubmitting}>
+                                      disabled={isSubmitting}>
                                         Submit Application
                                        <SubmitIcon/> 
                                     </button>
@@ -351,7 +311,7 @@ const SubmitServerForm = ({allTags}) => {
                                 <div className="flex flex-col items-center">
                                     <div className="text-4xl font-bold text-indigo-500 mb-2">2</div>
                                     <h4 className="font-bold text-gray-800">Verification</h4>
-                                    <p className="text-sm text-gray-500 mt-1">We verify your Discord server and ensure it meets our community standards.</p>
+                                    <p className="text-sm text-gray-500 mt-1">We verify your server and ensure it meets our community standards.</p>
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <div className="text-4xl font-bold text-indigo-500 mb-2">3</div>

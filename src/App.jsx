@@ -81,7 +81,7 @@ function App() {
     <Router>
       <div className="h-screen bg-gray-100 font-sans flex flex-col">
         <Navbar navItems={navItems}></Navbar>
-        <main className="flex-1 flex flex-col">
+        <main className="mt-4 flex-1 flex flex-col">
           <Routes>
             <Route path={navItems[0].path} element={<ServerDirectory servers={servers} allTags={allTags} ratingThreshold={RATING_THRESHOLD}/>}/>
             <Route path={navItems[1].path} element={<About/>}/>
