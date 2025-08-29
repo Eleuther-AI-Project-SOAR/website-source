@@ -14,7 +14,7 @@ const TableListEntries = ({serverData, activityLevelStyles, featureTagStyles}) =
                 <div className="flex flex-wrap gap-1">
                     {serverData.features.map(feature => {
                         return (
-                            <span key={`${serverData.name}-${feature}`} className={`inline-flex items-center p-1 ${featureTagStyles[feature].color} rounded-md`}>
+                            <span key={`${serverData.name}-${feature}`} title={feature} className={`inline-flex items-center p-1 ${featureTagStyles[feature].color} rounded-md`}>
                                 {featureTagStyles[feature].icon}
                             </span>
                         )
