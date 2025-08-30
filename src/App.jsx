@@ -5,6 +5,7 @@ import About from './features/pages/About/About'
 import SubmitServerForm from './features/pages/SubmitServerForm/SubmitServerForm'
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 const servers = [
       { name: 'EleutherAI', rating: 8.1, tag: 'Research', activityLevel: 'Very Active', language: 'English', location: 'Discord', description: 'Lots of resources; community projects to do and very active community.', features: ['Reading Group', 'Paper Channel', 'VC events/Office Hours', 'Jobs Board'] },
@@ -76,12 +77,29 @@ const navItems = [
 const RATING_THRESHOLD = 7.5
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'light';
+  });
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   return (
     <Router>
-      <div className="h-screen bg-gray-100 font-sans flex flex-col">
-        <Navbar navItems={navItems}></Navbar>
-        <main className="mt-4 flex-1 flex flex-col">
+      <div className="h-screen bg-gray-100 dark:bg-gray-900 font-sans flex flex-col">
+        <Navbar navItems={navItems} toggleTheme={toggleTheme}></Navbar>
+        <main className="flex-1 flex flex-col">
           <Routes>
             <Route path={navItems[0].path} element={<ServerDirectory servers={servers} allTags={allTags} ratingThreshold={RATING_THRESHOLD}/>}/>
             <Route path={navItems[1].path} element={<About/>}/>

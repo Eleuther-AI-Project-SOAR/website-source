@@ -243,11 +243,11 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     }) 
 
     const activityLevelStyles = {
-        'Very Active': 'bg-green-500 text-white',
-        'Active': 'bg-green-200 text-green-800',
-        'Semi-active': 'bg-yellow-200 text-yellow-800',
-        'Mostly Inactive': 'bg-gray-300 text-gray-800',
-        'Inactive': 'bg-gray-200 text-gray-600',
+        'Very Active': 'bg-green-500 dark:bg-green-600 text-white',
+        'Active': 'bg-green-200 dark:bg-green-900/50 text-green-800 dark:text-green-200',
+        'Semi-active': 'bg-yellow-200 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200',
+        'Mostly Inactive': 'bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200',
+        'Inactive': 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300',
     };
 
     const locationStyles = {
@@ -257,14 +257,14 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     }
 
     const featureTagStyles = {
-        'Reading Group': { icon: <ReadingGroupIcon />, color: 'bg-purple-100 text-purple-800' },
-        'Paper Channel': { icon: <PaperChannelIcon />, color: 'bg-blue-100 text-blue-800' },
-        'VC events/Office Hours': { icon: <VCEventsIcon />, color: 'bg-green-100 text-green-800' },
-        'Jobs Board': { icon: <JobsBoardIcon />, color: 'bg-orange-100 text-orange-800' },
+        'Reading Group': { icon: <ReadingGroupIcon />, color: 'bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200' },
+        'Paper Channel': { icon: <PaperChannelIcon />, color: 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200' },
+        'VC events/Office Hours': { icon: <VCEventsIcon />, color: 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200' },
+        'Jobs Board': { icon: <JobsBoardIcon />, color: 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200' },
     }
 
     return (
-            <div className="bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg flex-1">
+            <div className="bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg flex-1 dark:bg-gray-800">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
                         <FilterContainer filterControls={filterControls} allTags={allTags} serverRelated={serverRelated}></FilterContainer>

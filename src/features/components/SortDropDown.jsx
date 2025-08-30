@@ -62,7 +62,7 @@ const SortDropDown = ({
     };
 
     return (
-        <div className="absolute z-10 mt-1 w-64 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5" ref={dropdownRef}>
+        <div className="absolute z-10 mt-1 w-64 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600" ref={dropdownRef}>
             <div className="p-2">
                 {/* Reset Button */}
                 {isSortingApplied && (
@@ -72,7 +72,7 @@ const SortDropDown = ({
                                 resetSorting();
                                 toggleSortDropdown();
                             }}
-                            className="w-full text-xs px-2 py-1 rounded text-left bg-gray-200 hover:bg-gray-300 text-gray-700"
+                            className="w-full text-xs px-2 py-1 rounded text-left bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
                         >
                             Reset Sorting
                         </button>
@@ -80,11 +80,11 @@ const SortDropDown = ({
                 )}
 
                 {/* Divider */}
-                {isSortingApplied && <div className="border-t border-gray-200 my-2"></div>}
+                {isSortingApplied && <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>}
 
                 {/* Primary Options */}
                 <div className="mb-2">
-                    <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Primary Sort</div>
+                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider mb-1">Primary Sort</div>
                     <div className="grid grid-cols-2 gap-1">
                         {primaryOptions.map((option) => (
                             <button
@@ -93,7 +93,7 @@ const SortDropDown = ({
                                 className={`text-xs px-2 py-1 rounded text-left ${
                                     primarySortOption === option
                                         ? 'bg-indigo-600 text-white'
-                                        : 'hover:bg-gray-100'
+                                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                                 }`}
                             >
                                 {option}
@@ -103,11 +103,11 @@ const SortDropDown = ({
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-gray-200 my-2"></div>
+                <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
 
                 {/* Secondary Options */}
                 <div>
-                    <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider mb-1">
                         {['Score', 'Name', 'Activity'].includes(primarySortOption) ? 'Order' : 'Secondary Sort'}
                     </div>
                     <div className="grid grid-cols-2 gap-1 max-h-40 overflow-y-auto">
@@ -118,7 +118,7 @@ const SortDropDown = ({
                                 className={`text-xs px-2 py-1 rounded text-left ${
                                     secondarySortOption === option
                                         ? 'bg-indigo-600 text-white'
-                                        : 'hover:bg-gray-100'
+                                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                                 }`}
                             >
                                 {option}
