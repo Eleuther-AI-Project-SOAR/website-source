@@ -20,7 +20,7 @@ const Results = ({handleTableListViewOnClick, isTableViewOn, children, filterCon
             <div className="flex justify-between items-start mb-4">
                 <div className="relative">
                     <button 
-                        className="flex items-center space-x-2 p-2 border rounded-md bg-white dark:bg-gray-800 text-sm dark:text-gray-200"
+                        className="flex items-center space-x-2 p-2 border border-gray-600 rounded-md bg-white dark:bg-gray-800 text-sm dark:text-gray-200"
                         onClick={filterControls.toggleSortDropdown}
                     >
                         <span className="whitespace-nowrap">{getSortButtonText()}</span>
