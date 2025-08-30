@@ -33,6 +33,11 @@ const SortDropDown = ({
 
     // Secondary sort options based on primary selection
     const getSecondaryOptions = (primaryOption) => {
+        // If primary option is empty (reset state), return empty array
+        if (!primaryOption) {
+            return [];
+        }
+        
         switch (primaryOption) {
             case 'Score':
             case 'Name':
@@ -54,7 +59,14 @@ const SortDropDown = ({
     const secondaryOptions = getSecondaryOptions(primarySortOption);
 
     const handlePrimaryChange = (option) => {
-        setSorting(option, getSecondaryOptions(option)[0]);
+        // For Score, Name, and Activity, default to 'descending' to avoid flickering
+        const secondaryOptions = getSecondaryOptions(option);
+        const defaultSecondaryOption = 
+            ['Score', 'Name', 'Activity'].includes(option) && secondaryOptions.includes('descending') 
+                ? 'descending' 
+                : secondaryOptions[0] || '';
+        
+        setSorting(option, defaultSecondaryOption);
     };
 
     const handleSecondaryChange = (option) => {
