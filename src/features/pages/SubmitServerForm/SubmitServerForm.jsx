@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { ApplicationIcon, SubmitIcon } from '../../icons/SymbolIcons';
+import { ApplicationIcon, CheckIcon, SubmitIcon } from '../../icons/SymbolIcons';
 
 const SubmitServerForm = ({allTags}) => {
     const [selectedServerType, setSelectedServerType] = useState(null);
@@ -151,9 +151,7 @@ const SubmitServerForm = ({allTags}) => {
                         <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 mb-8">
                             <div className="text-center">
                                 <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
+                                    <CheckIcon/> 
                                 </div>
                                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Application Submitted Successfully!</h3>
                                 <p className="text-gray-600 dark:text-gray-300 mb-6">Thank you for submitting your server. We'll review your application and get back to you soon.</p>
