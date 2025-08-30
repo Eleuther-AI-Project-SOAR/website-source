@@ -8,13 +8,13 @@ const Navbar = ({navItems, toggleTheme}) => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0 flex items-center">
                         <Link to={navItems[0].path}><h1 className="text-2xl font-bold">AI Discord Directory</h1></Link>
-                        <nav className="hidden md:block ml-6">
+                        <nav className="hidden md:block ml-10">
                             <div className="flex items-baseline space-x-4">
                                 {navItems.map((item) => (
                                     <Link
                                         key={item.path}
                                         to={item.path}
-                                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
                                     >
                                         {item.name}
                                     </Link>
