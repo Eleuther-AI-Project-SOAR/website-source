@@ -264,7 +264,7 @@ const ServerDirectory = ({servers, allTags, ratingThreshold}) => {
     }
 
     return (
-            <div className="bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg flex-1 dark:bg-gray-800">
+            <div className="bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-lg flex-1 dark:bg-gray-900">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
                         <FilterContainer filterControls={filterControls} allTags={allTags} serverRelated={serverRelated}></FilterContainer>
