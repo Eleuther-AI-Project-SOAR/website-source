@@ -10,6 +10,7 @@ const useFilter = (initialFilters=[]) => {
     const [primarySortOption, setPrimarySortOption] = useState('Score')
     const [secondarySortOption, setSecondarySortOption] = useState('descending')
     const [isSortingApplied, setIsSortingApplied] = useState(true)
+    const [showSortDropdown, setShowSortDropdown] = useState(false)
     
     // Define the secondary sort options for each primary sort option
     const sortOptions = {
@@ -38,7 +39,6 @@ const useFilter = (initialFilters=[]) => {
             }
         }
     }, [primarySortOption]);
-    const [showSortDropdown, setShowSortDropdown] = useState(false)
 
     const resetSorting = () => {
         setPrimarySortOption('')
