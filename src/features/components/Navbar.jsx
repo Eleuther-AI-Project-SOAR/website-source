@@ -23,10 +23,10 @@ const Navbar = ({navItems, toggleTheme}) => {
                         </nav>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <a href="#" className="hidden md:block p-2 rounded-full bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200">
+                        <a href="https://x.com/SeonGunness" target="_blank" rel="noopener noreferrer" className="hidden md:block p-2 rounded-full bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200">
                             <TwitterIcon className="w-5 h-5" />
                         </a>
-                        <a href="#" className="hidden md:block p-2 rounded-full bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200">
+                        <a href="https://discord.gg/buBqNytqx3" target="_blank" rel="noopener noreferrer" className="hidden md:block p-2 rounded-full bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200">
                             <DiscordIcon className="w-5 h-5" />
                         </a>
                         <button 

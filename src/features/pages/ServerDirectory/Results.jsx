@@ -3,7 +3,7 @@ import SortDropDown from "../../components/SortDropDown"
 
 const Results = ({handleTableListViewOnClick, isTableViewOn, children, filterControls}) => {
     const viewSwitcherStyles = {
-        'active': 'bg-white dark:bg-gray-500 shadow',
+        'active': 'bg-white shadow transition-colors duration-150 bg-white dark:bg-gray-100 shadow text-gray-800 dark:text-gray-900',
         'inactive': 'text-gray-500 hover:bg-gray-300 dark:text-gray-400 dark:hover:bg-gray-700'
     }
 
