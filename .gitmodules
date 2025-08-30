@@ -1,0 +1,3 @@
+[submodule "project-soar-data-lake-generator"]
+	path = project-soar-data-lake-generator
+	url = ./project-soar-data-lake-generator
