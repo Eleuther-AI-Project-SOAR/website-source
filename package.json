@@ -1,5 +1,5 @@
 {
-  "name": "soar_scratch",
+  "name": "test_soar_new_design_gemini",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,14 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "etl": "npm run etl:build && npm run etl:refresh",
+    "etl:build": "python3 -m venv data-lake-generator/venv && data-lake-generator/venv/bin/pip install -r data-lake-generator/requirements.txt",
+    "etl:refresh": "data-lake-generator/venv/bin/python data-lake-generator/main.py && rm -f src/data/servers.js && cp ./build/servers.js src/data/servers.js"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.12",
+    "d3": "^7.9.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.1",
-    "tailwindcss": "^4.1.11"
+    "react-router-dom": "^7.8.2",
+    "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
